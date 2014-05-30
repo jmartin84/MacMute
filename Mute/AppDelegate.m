@@ -14,22 +14,47 @@
 @synthesize window = _window;
 
 - (void) hotkeyWithEvent:(NSEvent *)hkEvent {
-	[self addOutput:[NSString stringWithFormat:@"Firing -[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]];
-	[self addOutput:[NSString stringWithFormat:@"Hotkey event: %@", hkEvent]];
-}
-- (void) hotkeyWithEvent:(NSEvent *)hkEvent object:(id)anObject {
-	[self addOutput:[NSString stringWithFormat:@"Firing -[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd)]];
-	[self addOutput:[NSString stringWithFormat:@"Hotkey event: %@", hkEvent]];
-	[self addOutput:[NSString stringWithFormat:@"Object: %@", anObject]];
+    NSDictionary* errorDict;
+    NSAppleEventDescriptor* returnDescriptor = NULL;
+
+	NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:
+                                   @"if input volume of (get volume settings) = 0 then\n\
+                                        set level to 100\n\
+                                     else\n\
+                                        set level to 0\n\
+                                     end if\n\
+                                     set volume input volume level"];
+
+    returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
+    
+    
+    if (returnDescriptor == NULL)
+    {
+        [self addOutput: errorDict];
+    }
+    else{
+        [self setVisualIndicator];
+    }
 }
 
-- (void) addOutput:(NSString *)newOutput {
+
+-(void) setVisualIndicator {
+    //placeholder until I find some icons
+    if([statusItem.title  isEqual: @"Not Muted"]){
+        [statusItem setTitle:@"Muted"];
+    }
+    else{
+        [statusItem setTitle:@"Not Muted"];
+    }
+}
+
+- (void) addOutput:(NSObject *)newOutput {
 	NSLog(newOutput);
-	
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    
 	DDHotKeyCenter *c = [DDHotKeyCenter sharedHotKeyCenter];
 	if (![c registerHotKeyWithKeyCode:46 modifierFlags:NSShiftKeyMask | NSControlKeyMask target:self action:@selector(hotkeyWithEvent:) object:nil]) {
 		[self addOutput:@"Unable to register hotkey for example 1"];
@@ -46,8 +71,16 @@
 - (void) awakeFromNib{
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setMenu:statusMenu];
-    [statusItem setTitle:@"Mute"];
+    [statusItem setTitle:@"Not Muted"];
     [statusItem setHighlightMode:YES];
+    NSDictionary* errorDict;
+    NSAppleEventDescriptor* returnDescriptor = NULL;
+    
+	NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource:
+                                   @"set level to 100\n\
+                                   set volume input volume level"];
+    
+    returnDescriptor = [scriptObject executeAndReturnError: &errorDict];
     
 }
 
