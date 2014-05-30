@@ -85,6 +85,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10095D011938DDE800310097 /* DDHotKey */ = {
+			isa = PBXGroup;
+			children = (
+				10978DD61937984A006ABAD4 /* DDHotKeyCenter.h */,
+				10978DD71937984A006ABAD4 /* DDHotKeyCenter.m */,
+				10978DD81937984A006ABAD4 /* DDHotKeyTextField.h */,
+				10978DD91937984A006ABAD4 /* DDHotKeyTextField.m */,
+				10978DDA1937984A006ABAD4 /* DDHotKeyUtilities.h */,
+				10978DDB1937984A006ABAD4 /* DDHotKeyUtilities.m */,
+			);
+			name = DDHotKey;
+			sourceTree = "<group>";
+		};
 		1046C83C191D7BC000AC1106 = {
 			isa = PBXGroup;
 			children = (
@@ -128,12 +141,7 @@
 		1046C84E191D7BC000AC1106 /* Mute */ = {
 			isa = PBXGroup;
 			children = (
-				10978DD61937984A006ABAD4 /* DDHotKeyCenter.h */,
-				10978DD71937984A006ABAD4 /* DDHotKeyCenter.m */,
-				10978DD81937984A006ABAD4 /* DDHotKeyTextField.h */,
-				10978DD91937984A006ABAD4 /* DDHotKeyTextField.m */,
-				10978DDA1937984A006ABAD4 /* DDHotKeyUtilities.h */,
-				10978DDB1937984A006ABAD4 /* DDHotKeyUtilities.m */,
+				10095D011938DDE800310097 /* DDHotKey */,
 				1046C85A191D7BC000AC1106 /* AppDelegate.h */,
 				1046C85B191D7BC000AC1106 /* AppDelegate.m */,
 				1046C85D191D7BC000AC1106 /* MainMenu.xib */,
